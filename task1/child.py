@@ -7,6 +7,7 @@ import random
 print("Сhild [{os.getpid()}]: I am started. My PID {os.getpid()}. Parent PID {os.getppid()}")
 
 s = int(sys.argv[1])
+
 time.sleep(s)
 
 print("Child [{os.getpid()}]: I am ended. PID {os.getpid()}. Parent PID {os.getppid()}")
