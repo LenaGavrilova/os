@@ -14,7 +14,7 @@ while ch > 0:
         print("Parent [{os.getpid()}]: I ran children process with PID {child}")
         
     else:
-        os.execl("./child.py", "./child.py", str(random.randint(3, 15)))
+        os.execl("./child.py", "./child.py", str(random.randint(5, 10)))
 
     if child > 0:
         ch -= 1
@@ -32,7 +32,7 @@ while ch > 0:
             print("Parent [{os.getpid()}]: I ran children process with PID {child}")
             
         else:
-            os.execl("./child.py", "./child.py", str(random.randint(3, 15)))
+            os.execl("./child.py", "./child.py", str(random.randint(5, 10)))
     else:
         print("Parent [{os.getpid()}]: Child with PID {ch_pid} terminated. Exit Status {status}")
         ch -= 1
