@@ -1,0 +1,58 @@
+#!/bin/bash
+
+declare -i step=1
+declare -i correct_guesses=0
+declare -i incorrect_guesses=0
+declare -a numbers=()
+
+display_stats() {
+local total=$((correct_guesses + incorrect_guesses))
+local hit_stat=$((100 * correct_guesses / total))
+local miss_stat=$((100 - hit_percent))
+
+echo "Hit: ${hit_stat}%" "Miss: ${miss_stat}%"
+echo -n "Numbers: "
+
+local i
+for ((i = ${#numbers[@]} - 1; i >= 0 && i >= ${#numbers[@]} - 10; i--)); do
+if [[ ${numbers[$i]} == "hit" ]]; then
+echo -ne "\e[32m${numbers[$i]}\e[0m "
+else
+echo -ne "\e[31m${numbers[$i]}\e[0m "
+fi
+done
+echo
+}
+
+while true; do
+echo "Step: $step"
+
+random_number=$((RANDOM % 10))
+
+read -p "Please enter number from 0 to 9 (q - quit): " user_input
+
+if [[ $user_input == "q" ]]; then
+echo "Exiting the game. Goodbye!"
+exit 0
+fi
+
+if ! [[ $user_input =~ ^[0-9]$ ]]; then
+echo "Error: please enter a number from 0 to 9 or 'q' to quit."
+continue
+fi
+
+if [[ $user_input -eq $random_number ]]; then
+echo "Hit! My number: $random_number"
+numbers+=("\e[32m$user_input\e[0m")
+correct_guesses+=1
+else
+echo "Miss! My number: $random_number"
+numbers+=("\e[31m$user_input\e[0m")
+incorrect_guesses+=1
+fi
+
+display_stats
+
+step+=1
+done
+
